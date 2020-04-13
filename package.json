@@ -1,6 +1,6 @@
 {
   "name": "mean-guide",
-  "version": "0.0.0",
+  "version": "0.1.0-beta.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +9,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "keywords": ["npm-library"],
+  "keywords": [
+    "npm-library"
+  ],
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.1.1",
