@@ -9,6 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "keywords": ["npm-library"],
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.1.1",
