@@ -18,7 +18,6 @@ export class PostsService {
       this.posts = postData.posts
       this.postsUpdated.next([...this.posts])
     })
-    // return [...this.posts]
   }
 
   getPostsUpdatedListener(){
@@ -26,7 +25,12 @@ export class PostsService {
   }
 
   addPost(title: string, content: string){
-    this.posts.push({id: undefined, title, content})
-    this.postsUpdated.next([...this.posts])
+    const post: Post = {id: undefined, title, content}
+    this.http.post<{message: string}>('http://localhost:3000/api/posts', post)
+    .subscribe(response => {
+      console.log(response.message)
+      this.posts.push(post)
+      this.postsUpdated.next([...this.posts])
+    })
   }
 }
