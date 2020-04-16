@@ -33,3 +33,9 @@ Angular Material Tutorial: https://academind.com/learn/angular/angular-material-
 Angular Material Docs: https://material.angular.io/
 Reference vs Primitive Types in JS: https://academind.com/learn/javascript/reference-vs-primitive-values/
 RxJS Tutorial: https://academind.com/learn/javascript/understanding-rxjs/
+
+## Section 5 Resources:
+
+* [Angular Material Docs][1]
+
+[1]: https://material.angular.io/components/categories
