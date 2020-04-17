@@ -21,8 +21,7 @@ export class PostsService {
         map((postData) => {
           return postData.posts.map((post) => ({
             id: post._id,
-            title: post.title,
-            content: post.content,
+            ...post
           }));
         })
       )
@@ -44,18 +43,19 @@ export class PostsService {
   }
 
   addPost(title: string, content: string, image: File) {
-    const post: Post = { id: undefined, title, content };
+    const post: Post = { id: undefined, title, content, imagePath: null };
     const postData = new FormData();
     postData.append('title', title);
     postData.append('content', content);
     postData.append('image', image, title);
     this.http
-      .post<{ message: string; post: any }>(
+      .post<{ message: string; post: Post }>(
         'http://localhost:3000/api/posts',
         postData
       )
       .subscribe((response) => {
-        post.id = response.post._id;
+        post.id = response.post.id;
+        post.imagePath = response.post.imagePath;
         this.posts.push(post);
         console.log(this.posts);
         this.postsUpdated.next([...this.posts]);

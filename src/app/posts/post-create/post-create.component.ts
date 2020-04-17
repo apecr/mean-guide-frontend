@@ -48,6 +48,7 @@ export class PostCreateComponent implements OnInit {
           this.post = {
             id: postData._id,
             ...postData,
+            imagePath: null,
           };
           this.form.setValue({
             title: this.post.title,
@@ -80,6 +81,7 @@ export class PostCreateComponent implements OnInit {
         id: this.postId,
         title: this.form.value.title,
         content: this.form.value.content,
+        imagePath: null
       });
     }
     this.form.reset();
