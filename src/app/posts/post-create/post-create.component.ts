@@ -3,6 +3,7 @@ import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { PostsService } from '../posts.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Post } from '../post.model';
+import { mimeType } from './mime-type.validator';
 
 @Component({
   selector: 'app-post-create',
@@ -15,7 +16,7 @@ export class PostCreateComponent implements OnInit {
   post: Post = null;
   isLoading = false;
   form: FormGroup;
-  imagePreview: string
+  imagePreview: string;
 
   private mode = 'create';
   private postId: string = null;
@@ -32,7 +33,10 @@ export class PostCreateComponent implements OnInit {
       content: new FormControl(null, {
         validators: [Validators.required],
       }),
-      image: new FormControl(null, { validators: [Validators.required] }),
+      image: new FormControl(null, {
+        validators: [Validators.required],
+        asyncValidators: [mimeType],
+      }),
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('postId')) {
@@ -48,7 +52,7 @@ export class PostCreateComponent implements OnInit {
           this.form.setValue({
             title: this.post.title,
             content: this.post.content,
-            image: null
+            image: null,
           });
         });
       } else {
@@ -61,6 +65,7 @@ export class PostCreateComponent implements OnInit {
 
   onSavePost() {
     if (this.form.invalid) {
+      console.log('form invalid')
       return;
     }
     this.isLoading = true;
@@ -79,14 +84,13 @@ export class PostCreateComponent implements OnInit {
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({
-      image: file
-    })
-    this.form.get('image').updateValueAndValidity()
-    const reader = new FileReader()
+      image: file,
+    });
+    this.form.get('image').updateValueAndValidity();
+    const reader = new FileReader();
     reader.onload = () => {
-      console.log(reader.result)
-      this.imagePreview = (reader.result as string)
-    }
-    reader.readAsDataURL(file)
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 }
