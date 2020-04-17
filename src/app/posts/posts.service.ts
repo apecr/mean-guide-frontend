@@ -21,7 +21,7 @@ export class PostsService {
         map((postData) => {
           return postData.posts.map((post) => ({
             id: post._id,
-            ...post
+            ...post,
           }));
         })
       )
@@ -33,7 +33,7 @@ export class PostsService {
   }
 
   getPost(postId: string) {
-    return this.http.get<{ _id: string; title: string; content: string }>(
+    return this.http.get<{ _id: string; title: string; content: string, imagePath: string }>(
       `http://localhost:3000/api/posts/${postId}`
     );
   }
@@ -44,10 +44,7 @@ export class PostsService {
 
   addPost(title: string, content: string, image: File) {
     const post: Post = { id: undefined, title, content, imagePath: null };
-    const postData = new FormData();
-    postData.append('title', title);
-    postData.append('content', content);
-    postData.append('image', image, title);
+    const postData = createPostFromForm(title, content, image);
     this.http
       .post<{ message: string; post: Post }>(
         'http://localhost:3000/api/posts',
@@ -63,13 +60,30 @@ export class PostsService {
       });
   }
 
-  updatePost(post: Post) {
+  updatePost(post: Post, image: File | string) {
+    let postData: Post | FormData;
+    if (typeof image === 'object') {
+      const { title, content } = post;
+      postData = createPostFromForm(title, content, image);
+      postData.append('id', post.id)
+    } else {
+      postData = {
+        ...post,
+        imagePath: image,
+      };
+    }
     this.http
-      .put(`http://localhost:3000/api/posts/${post.id}`, post)
-      .subscribe((_) => {
+      .put<{ message: string; post: Post }>(
+        `http://localhost:3000/api/posts/${post.id}`,
+        postData
+      )
+      .subscribe((response) => {
         this.posts = this.posts.map((p) => {
           if (p.id === post.id) {
-            return post;
+            return {
+              ...post,
+              imagePath: response.post.imagePath,
+            };
           }
           return p;
         });
@@ -88,3 +102,10 @@ export class PostsService {
       });
   }
 }
+const createPostFromForm = (title: string, content: string, image: File) => {
+  const postData = new FormData();
+  postData.append('title', title);
+  postData.append('content', content);
+  postData.append('image', image, title);
+  return postData;
+};
