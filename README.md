@@ -38,4 +38,9 @@ RxJS Tutorial: https://academind.com/learn/javascript/understanding-rxjs/
 
 * [Angular Material Docs][1]
 
+## Section 6 Resources:
+
+* [Tutorial on Angular Image Upload][2]
+
 [1]: https://material.angular.io/components/categories
+[2]: https://academind.com/learn/angular/snippets/angular-image-upload-made-easy
