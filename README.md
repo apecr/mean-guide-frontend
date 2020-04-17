@@ -26,19 +26,21 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-## Section Resources
+## Resources
 
-Learn everything about Angular: https://academind.com/learn/angular
-Angular Material Tutorial: https://academind.com/learn/angular/angular-material-a-thorough-guide/
-Angular Material Docs: https://material.angular.io/
-Reference vs Primitive Types in JS: https://academind.com/learn/javascript/reference-vs-primitive-values/
-RxJS Tutorial: https://academind.com/learn/javascript/understanding-rxjs/
+### Section 3 Resources
 
-## Section 5 Resources:
+* Learn everything about Angular: https://academind.com/learn/angular
+* Angular Material Tutorial: https://academind.com/learn/angular/angular-material-a-thorough-guide/
+* Angular Material Docs: https://material.angular.io/
+* Reference vs Primitive Types in JS: https://academind.com/learn/javascript/reference-vs-primitive-values/
+* RxJS Tutorial: https://academind.com/learn/javascript/understanding-rxjs/
+
+### Section 5 Resources:
 
 * [Angular Material Docs][1]
 
-## Section 6 Resources:
+### Section 6 Resources:
 
 * [Tutorial on Angular Image Upload][2]
 
