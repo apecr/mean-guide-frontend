@@ -44,5 +44,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 * [Tutorial on Angular Image Upload][2]
 
+### Section 7 Resources:
+
+* Angular Material Paginator [Docs][3]
+
 [1]: https://material.angular.io/components/categories
 [2]: https://academind.com/learn/angular/snippets/angular-image-upload-made-easy
+[3]: https://material.angular.io/components/paginator/overview
