@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 import { HeaderComponent } from './header/header.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
@@ -24,6 +25,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
     HeaderComponent,
     PostListComponent,
     LoginComponent,
+    SignupComponent,
   ],
   imports: [
     AppRoutingModule,
