@@ -10,6 +10,7 @@ export class AuthService {
   private token: string = undefined;
   private authStatusListener = new Subject<boolean>();
   private isAuthenticated: boolean = false;
+
   constructor(private httpClient: HttpClient) {}
 
   getToken() {
@@ -51,5 +52,12 @@ export class AuthService {
       .subscribe((response) => {
         this.manageToken(response);
       });
+  }
+
+  logout(){
+    console.log('logout')
+    this.token = undefined
+    this.isAuthenticated = false
+    this.authStatusListener.next(false)
   }
 }
