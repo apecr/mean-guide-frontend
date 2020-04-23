@@ -13,6 +13,7 @@ export class LoginComponent {
     if (form.invalid){
       return
     }
+    this.isLoading = true
     this.authService.login({...form.value})
   }
 }
