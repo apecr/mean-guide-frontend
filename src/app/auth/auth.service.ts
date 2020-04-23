@@ -1,34 +1,55 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthData } from './auth-data.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-
-  private token: string = undefined
+  private token: string = undefined;
+  private authStatusListener = new Subject<boolean>();
+  private isAuthenticated: boolean = false;
   constructor(private httpClient: HttpClient) {}
 
   getToken() {
-    return this.token
+    return this.token;
+  }
+
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
+  }
+
+  getIsAuthenticated(): boolean {
+    return this.isAuthenticated;
+  }
+
+  private manageToken(response) {
+    console.log(response);
+    this.token = response.token;
+    if (this.token) {
+      this.isAuthenticated = true;
+      return this.authStatusListener.next(true);
+    }
+    this.isAuthenticated = false;
   }
 
   createUser(authData: AuthData) {
-    this.httpClient.post<{token: string}>('http://localhost:3000/api/user/signup', authData)
-    .subscribe(response => {
-      console.log(response)
-      this.token = response.token
-    })
+    this.httpClient
+      .post<{ token: string }>(
+        'http://localhost:3000/api/user/signup',
+        authData
+      )
+      .subscribe((response) => {
+        this.manageToken(response);
+      });
   }
 
-  login(authData: AuthData){
-    console.log('login')
-    console.log(authData)
-    this.httpClient.post<{token: string}>('http://localhost:3000/api/user/login', authData)
-    .subscribe(response => {
-      console.log(response)
-      this.token = response.token
-    })
+  login(authData: AuthData) {
+    this.httpClient
+      .post<{ token: string }>('http://localhost:3000/api/user/login', authData)
+      .subscribe((response) => {
+        this.manageToken(response);
+      });
   }
 }
