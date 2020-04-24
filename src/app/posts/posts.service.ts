@@ -43,6 +43,7 @@ export class PostsService {
       title: string;
       content: string;
       imagePath: string;
+      creator: string;
     }>(`http://localhost:3000/api/posts/${postId}`);
   }
 
@@ -51,7 +52,7 @@ export class PostsService {
   }
 
   addPost(title: string, content: string, image: File) {
-    const post: Post = { id: undefined, title, content, imagePath: null };
+    const post: Post = { id: undefined, title, content, imagePath: null, creator: null };
     const postData = createPostFromForm(title, content, image);
     this.http
       .post<{ message: string; post: Post }>(

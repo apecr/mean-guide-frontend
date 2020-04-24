@@ -91,6 +91,7 @@ export class AuthService {
     if (authInformation && authInformation.expirationDate > new Date()) {
       this.token = authInformation.token;
       this.isAuthenticated = true;
+      this.userId = authInformation.userId
       const expiresIn =
         authInformation.expirationDate.getTime() - new Date().getTime();
       this.setTimer(expiresIn / 1000);
