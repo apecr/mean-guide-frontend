@@ -53,8 +53,13 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 * Angular Route [Guards][4].
 * More on Angular [Interceptors][5].
 
+### Section 10 Resources:
+
+* Angular Material Dialog [Docs][6].
+
 [1]: https://material.angular.io/components/categories
 [2]: https://academind.com/learn/angular/snippets/angular-image-upload-made-easy
 [3]: https://material.angular.io/components/paginator/overview
 [4]: https://angular.io/guide/router#milestone-5-route-guards
 [5]: https://angular.io/guide/http#intercepting-requests-and-responses
+[6]: https://material.angular.io/components/dialog/overview
