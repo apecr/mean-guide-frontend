@@ -1,16 +1,18 @@
-import { Component, Output, OnInit } from '@angular/core';
+import { Component, Output, OnInit, OnDestroy } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { PostsService } from '../posts.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Post } from '../post.model';
 import { mimeType } from './mime-type.validator';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html',
   styleUrls: ['./post-create.component.css'],
 })
-export class PostCreateComponent implements OnInit {
+export class PostCreateComponent implements OnInit, OnDestroy {
   enteredContent = '';
   enteredTitle = '';
   post: Post = null;
@@ -18,14 +20,23 @@ export class PostCreateComponent implements OnInit {
   form: FormGroup;
   imagePreview: string;
 
+  private authStatusSub: Subscription;
   private mode = 'create';
   private postId: string = null;
 
   constructor(
     public postsService: PostsService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private authService: AuthService
   ) {}
+  ngOnDestroy(): void {
+    this.authStatusSub.unsubscribe()
+  }
+
   ngOnInit(): void {
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe((authStatus) => (this.isLoading = false));
     this.form = new FormGroup({
       title: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)],
@@ -47,7 +58,7 @@ export class PostCreateComponent implements OnInit {
           this.isLoading = false;
           this.post = {
             id: postData._id,
-            ...postData
+            ...postData,
           };
           this.form.setValue({
             title: this.post.title,
@@ -76,13 +87,16 @@ export class PostCreateComponent implements OnInit {
         this.form.value.image
       );
     } else {
-      this.postsService.updatePost({
-        id: this.postId,
-        title: this.form.value.title,
-        content: this.form.value.content,
-        imagePath: null,
-        creator: null
-      }, this.form.value.image);
+      this.postsService.updatePost(
+        {
+          id: this.postId,
+          title: this.form.value.title,
+          content: this.form.value.content,
+          imagePath: null,
+          creator: null,
+        },
+        this.form.value.image
+      );
     }
     this.form.reset();
   }
