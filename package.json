@@ -1,6 +1,6 @@
 {
   "name": "mean-guide-frontend",
-  "version": "0.2.0-rc.0",
+  "version": "0.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
