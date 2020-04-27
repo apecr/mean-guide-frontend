@@ -12,16 +12,12 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
 import { HeaderComponent } from './header/header.component';
-import { PostCreateComponent } from './posts/post-create/post-create.component';
-import { PostListComponent } from './posts/post-list/post-list.component';
-
+import { PostsModule } from './posts/posts.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostCreateComponent,
     HeaderComponent,
-    PostListComponent,
     LoginComponent,
     SignupComponent,
     ErrorComponent,
@@ -34,6 +30,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
     AngularMaterialModule,
     HttpClientModule,
     FormsModule,
+    PostsModule,
   ],
   providers: [
     {
