@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthData } from './auth-data.model';
-import { Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { AuthData } from './auth-data.model';
+
+const BACKEND_URL = `${environment.apiUrl}/user`;
 
 @Injectable({
   providedIn: 'root',
@@ -57,7 +60,7 @@ export class AuthService {
   createUser(authData: AuthData) {
     this.httpClient
       .post<{ token: string; expiresIn: number; userId: string }>(
-        'http://localhost:3000/api/user/signup',
+        `${BACKEND_URL}/signup`,
         authData
       )
       .subscribe(
@@ -73,7 +76,7 @@ export class AuthService {
   login(authData: AuthData) {
     this.httpClient
       .post<{ token: string; expiresIn: number; userId: string }>(
-        'http://localhost:3000/api/user/login',
+        `${BACKEND_URL}/login`,
         authData
       )
       .subscribe(
