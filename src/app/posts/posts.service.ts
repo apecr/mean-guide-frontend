@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
+const BACKEND_URL = 'http://localhost:3000/api/posts'
+
 @Injectable({
   providedIn: 'root',
 })
@@ -18,7 +20,7 @@ export class PostsService {
     const queryParams = `pagesize=${pageSize}&page=${currentPage}`;
     this.http
       .get<{ message: string; posts: any; count: number }>(
-        `http://localhost:3000/api/posts?${queryParams}`
+        `${BACKEND_URL}?${queryParams}`
       )
       .pipe(
         map((postData) => {
@@ -44,7 +46,7 @@ export class PostsService {
       content: string;
       imagePath: string;
       creator: string;
-    }>(`http://localhost:3000/api/posts/${postId}`);
+    }>(`${BACKEND_URL}/${postId}`);
   }
 
   getPostsUpdatedListener() {
@@ -52,11 +54,10 @@ export class PostsService {
   }
 
   addPost(title: string, content: string, image: File) {
-    const post: Post = { id: undefined, title, content, imagePath: null, creator: null };
     const postData = createPostFromForm(title, content, image);
     this.http
       .post<{ message: string; post: Post }>(
-        'http://localhost:3000/api/posts',
+        BACKEND_URL,
         postData
       )
       .subscribe((response) => {
@@ -78,7 +79,7 @@ export class PostsService {
     }
     this.http
       .put<{ message: string; post: Post }>(
-        `http://localhost:3000/api/posts/${post.id}`,
+        `${BACKEND_URL}/${post.id}`,
         postData
       )
       .subscribe((response) => {
@@ -88,7 +89,7 @@ export class PostsService {
 
   deletePost(postId: string) {
     return this.http
-      .delete(`http://localhost:3000/api/posts/${postId}`);
+      .delete(`${BACKEND_URL}/${postId}`);
   }
 }
 const createPostFromForm = (title: string, content: string, image: File) => {
